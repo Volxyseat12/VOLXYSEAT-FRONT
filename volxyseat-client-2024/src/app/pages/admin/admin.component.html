@@ -1,0 +1,126 @@
+<div class="min-h-screen bg-gray-50 flex">
+  <aside class="w-64 bg-white p-4 shadow-lg">
+      <div class="p-4 flex justify-center">
+          <a href="/">
+              <img src="/l2.png" alt="" />
+          </a>
+      </div>
+      <nav class="space-y-2">
+          <a href="/profile"
+              class="flex items-center space-x-2 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-100 transition">
+              <i class="pi pi-home text-gray-700"></i>
+              <span>Perfil</span>
+          </a>
+          <a href="/admin"
+              class="flex items-center space-x-2 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-100 transition">
+              <i class="pi pi-cog text-gray-700"></i>
+              <span>Administrador</span>
+          </a>
+      </nav>
+  </aside>
+
+  <div class="flex-1 p-8">
+      <div class="max-w-6xl mx-auto">
+          <div class="mb-8 flex items-center justify-between">
+              <h2 class="text-3xl font-bold text-orange-500 uppercase">PAINEL DE ADMINISTRADOR</h2>
+              <div class="flex items-center space-x-4">
+                  <div class="relative">
+                      <button (click)="toggleUserDropdown()"
+                          class="flex items-center rounded-lg px-4 py-2 border border-gray-300 hover:bg-gray-100 transition">
+                          <span class="mr-2 text-gray-700">Olá, {{ username }}</span>
+                          <i class="pi pi-chevron-down text-gray-600"></i>
+                      </button>
+                      <div *ngIf="showDropdown"
+                          class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
+                          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Perfil</a>
+                          <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition"
+                              (click)="logout()">Desconectar</a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6">
+            <form [formGroup]="subscriptionForm">
+              <div class="bg-white rounded-lg shadow p-6">
+                  <h2 class="text-lg font-semibold mb-4">EDITAR PLANO {{ subscriptionEnumToString(subscription.type).toUpperCase() }}</h2>
+                  <div class="space-y-4">
+                      <div>
+                          <label class="text-sm text-gray-600">Nome do Plano</label>
+                          <input class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2" formControlName="description" placeholder="Nome do Plano" />
+                      </div>
+                      <div>
+                          <label class="text-sm text-gray-600">Preço</label>
+                          <input type="number" class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2" formControlName="price" placeholder="0.00" />
+                      </div>
+
+                      <div class="relative">
+                          <label class="text-sm text-gray-600">Tipo</label>
+                          <div formControlName="type" (click)="toggleTypeDropdown()" class="w-full border border-gray-300 rounded-lg px-4 py-2 cursor-pointer flex justify-between items-center">
+                              <span>{{ subscriptionEnumToString(selectedType) }}</span>
+                              <i class="pi pi-chevron-down text-gray-600"></i>
+                          </div>
+                          <div *ngIf="showTypeDropdown" class="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-2 shadow-lg">
+                              <div *ngFor="let type of subscriptionTypes" (click)="selectType(type)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                  {{ subscriptionEnumToString(type) }}
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="relative">
+                          <label class="text-sm text-gray-600">Status</label>
+                          <div formControlName="status" (click)="toggleStatusDropdown()" class="w-full border border-gray-300 rounded-lg px-4 py-2 cursor-pointer flex justify-between items-center">
+                              <span>{{ selectedStatus ? subscriptionStatusToString(selectedStatus) : 'Selecione o status' }}</span>
+                              <i class="pi pi-chevron-down text-gray-600"></i>
+                          </div>
+                          <div *ngIf="showStatusDropdown" class="absolute z-10 w-full bg-white border border-gray-300 rounded-lg mt-2 shadow-lg">
+                              <div *ngFor="let status of subscriptionStatus" (click)="selectStatus(status)" class="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                                  {{ subscriptionStatusToString(status) }}
+                              </div>
+                          </div>
+                      </div>
+
+                      <div>
+                          <label class="text-sm text-gray-600">ID do Plano Mercado Pago</label>
+                          <input class="mt-1 w-full border border-gray-300 rounded-lg px-4 py-2" formControlName="mercadoPagoPlanId" placeholder="ID do Mercado Pago" />
+                      </div>
+
+                      <button (click)="updateSubscription(subscription.id)" class="bg-[#F97316] hover:bg-[#EA580C] w-full mt-4 text-white py-2 rounded-lg">SALVAR</button>
+                  </div>
+              </div>
+          </form>
+
+
+              <div>
+                  <div class="bg-white rounded-lg shadow p-6">
+                      <h2 class="text-lg font-semibold mb-4">LISTA DE PLANOS</h2>
+                      <table class="min-w-full divide-y divide-gray-200">
+                          <thead>
+                              <tr class="bg-orange-50">
+                                  <th class="px-6 py-3 text-left text-sm font-bold text-orange-500 uppercase">Tipo
+                                  </th>
+                                  <th class="px-6 py-3 text-left text-sm font-bold text-orange-500 uppercase">
+                                      Descrição</th>
+                                  <th class="px-6 py-3 text-left text-sm font-bold text-orange-500 uppercase">Preço
+                                  </th>
+                                  <th class="px-6 py-3 text-left text-sm font-bold text-orange-500 uppercase">Ações
+                                  </th>
+                              </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200">
+                              <tr *ngFor="let subscription of subscriptions">
+                                  <td class="px-6 py-4 text-sm text-gray-700">{{ subscriptionEnumToString(subscription.type) }}</td>
+                                  <td class="px-6 py-4 text-sm text-gray-700">{{ subscription.description }}</td>
+                                  <td class="px-6 py-4 text-sm text-gray-700">{{ subscription.price | currency }}</td>
+                                  <td class="px-6 py-4 text-sm text-gray-700">
+                                      <button (click)="updateForm(subscription.id)" class="p-2 uppercase bg-orange-500 text-white text-sm rounded-lg font-bold">EDITAR</button>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

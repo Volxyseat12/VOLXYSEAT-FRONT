@@ -1,0 +1,179 @@
+/* Container principal */
+.login-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow: auto;
+}
+
+/* Formulários de login */
+.login-forms {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2rem;
+}
+
+/* Contexto do login */
+.login-context {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem; /* Ajuste o padding para melhor responsividade */
+  max-width: 400px; /* Limita a largura máxima */
+  width: 90%; /* Garante que o formulário ocupe a largura disponível */
+  margin: 0 auto; /* Centraliza o formulário */
+}
+
+/* Banner de login */
+.login-banner {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.login-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ajustes para telas médias */
+@media (max-width: 1024px) {
+  .login-container {
+    grid-template-columns: 1fr; /* Exibe apenas uma coluna em telas médias */
+  }
+
+  .login-banner {
+    display: none; /* Oculta o banner em telas menores */
+  }
+
+  .login-context {
+    padding: 1.5rem; /* Ajusta o padding */
+    max-width: 90%; /* Ajusta a largura máxima */
+  }
+
+  .login-title {
+    font-size: 1.5rem; /* Ajusta o tamanho da fonte */
+  }
+}
+
+/* Ajustes para telas pequenas */
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 1.25rem; /* Ajusta o tamanho da fonte */
+    text-align: center; /* Centraliza o texto */
+  }
+
+  input {
+    font-size: 1.2rem; /* Ajusta o tamanho da fonte dos inputs */
+    padding: 8px 12px; /* Ajusta o padding dos inputs */
+  }
+
+  .login-forms {
+    width: 100%; /* Ajusta a largura dos formulários */
+  }
+
+  .login-context {
+    padding: 1rem; /* Ajusta o padding */
+  }
+
+  button {
+    font-size: 1rem; /* Ajusta o tamanho da fonte do botão */
+    padding: 12px; /* Ajusta o padding do botão */
+  }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 480px) {
+  .login-title {
+    font-size: 1rem; /* Ajusta o tamanho da fonte */
+  }
+
+  input {
+    font-size: 1rem; /* Ajusta o tamanho da fonte dos inputs */
+    padding: 6px 10px; /* Ajusta o padding dos inputs */
+  }
+
+  button {
+    font-size: 0.875rem; /* Ajusta o tamanho da fonte do botão */
+    padding: 10px; /* Ajusta o padding do botão */
+  }
+}
+
+/* Estilos dos labels */
+.login-label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Adiciona margem entre os campos */
+}
+
+.login-label label {
+  color: #000;
+  font-family: "Centra No2", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem; /* Margem inferior para separar o label do input */
+}
+
+/* Estilos dos inputs */
+input {
+  border-radius: 10px;
+  border: 1px solid #d9d9d9;
+  background: rgba(255, 255, 255, 0.85);
+  height: 2.5rem;
+  width: 100%;
+  font-size: 1.4rem;
+  outline: none;
+  padding: 0 16px;
+}
+
+/* Estilos do texto de login */
+.login {
+  color: #000;
+  font-family: "Centra No2", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+/* Estilos dos links */
+.login-cta a {
+  text-decoration: none;
+  color: #fb812c;
+  font-family: "Centra No2", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* CTA do login */
+.login-cta {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Estilos do botão de login */
+.login-login-cta {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
+button {
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #fb812c;
+  border: none;
+  padding: 16px;
+  font-size: 1.25rem;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}

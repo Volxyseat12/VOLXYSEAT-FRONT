@@ -1,0 +1,44 @@
+﻿{
+  "CreateSubscriptionCommand": {
+    "TypeId": "Basic",
+    "StatusId": "Active",
+    "Description": "Sample description",
+    "Price": 100.0,
+    "CreatedOn": "2024-08-28T00:00:00Z",
+    "UpdatedOn": "2024-08-28T00:00:00Z"
+  },
+  "SubscriptionCloseCommand": {
+    "TypeId": "Premium",
+    "StatusId": "Inactive",
+    "Description": "Premium subscription closed by user request.",
+    "Price": 99.99,
+    "CreatedOn": "2023-01-01T00:00:00Z",
+    "UpdatedOn": "2023-06-01T00:00:00Z",
+    "Histories": [
+      {
+        "SubscriptionId": "123e4567-e89b-12d3-a456-426614174000",
+        "ChangedBy": "System",
+        "OldStatus": "Active",
+        "NewStatus": "Inactive",
+        "Comment": "Subscription closed due to inactivity."
+      }
+    ]
+  },
+  "SubscriptionOpenCommand": {
+    "TypeId": "Premium",
+    "StatusId": "Active",
+    "Description": "Premium subscription reopened by user request.",
+    "Price": 99.99,
+    "CreatedOn": "2023-01-01T00:00:00Z",
+    "UpdatedOn": "2023-06-02T00:00:00Z",
+    "Histories": [
+      {
+        "SubscriptionId": "123e4567-e89b-12d3-a456-426614174000",
+        "ChangedBy": "System",
+        "OldStatus": "Inactive",
+        "NewStatus": "Active",
+        "Comment": "Subscription reopened after reactivation."
+      }
+    ]
+  }
+}

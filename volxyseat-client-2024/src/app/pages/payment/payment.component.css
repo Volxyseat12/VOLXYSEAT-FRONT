@@ -1,0 +1,48 @@
+.min-h-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.mat-card {
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.text-gray-500 {
+  color: #6b7280;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-center {
+  text-align: center;
+}
+.div-input {
+  height: 40px;
+}
+
+input::placeholder {
+  font-size: 16px;
+  color: black;
+}
+
+.installments {
+  display: none;
+}
+
+.issuer-input {
+  width: 100%;
+}

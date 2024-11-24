@@ -1,0 +1,12 @@
+.relative .pi-chevron-down {
+    transition: transform 0.2s;
+}
+
+.relative .pi-chevron-down.open {
+    transform: rotate(180deg);
+}
+
+.relative .absolute {
+    max-height: 200px;
+    overflow-y: auto;
+}

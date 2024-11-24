@@ -1,0 +1,102 @@
+<section id="prices" class="min-h-screen">
+  <div class="container mx-auto bg-white">
+    <div class="py-12 px-4 mb-12">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        <div
+          *ngFor="let feature of features; let i = index"
+          class="relative group"
+          (mouseenter)="setHoveredCard(i)"
+          (mouseleave)="setHoveredCard(null)"
+          [@cardAnimation]
+        >
+          <div
+            class="relative p-6 bg-white rounded-xl shadow-lg border border-gray-100 transition-transform duration-300"
+            [ngClass]="{ '-translate-y-2': hoveredCard === i }"
+          >
+            <h3 class="text-lg font-semibold mb-2">{{ feature.title }}</h3>
+            <p class="text-gray-600">{{ feature.description }}</p>
+          </div>
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl opacity-0 transition-opacity duration-300"
+            [ngClass]="{ 'opacity-10': hoveredCard === i }"
+            style="transform: translateY(8px); filter: blur(12px);"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-center items-center">
+      <div class="w-1/4 pr-4 flex flex-col gap-y-1">
+        <button
+          *ngFor="let category of categories"
+          (click)="setSelectedCategory(category.name)"
+          [ngClass]="{
+            'default': selectedCategory === category.name,
+            'ghost': selectedCategory !== category.name
+          }"
+          class="flex items-center justify-start relative group dark:md:hover:text-orange-600 hover:font-bold transition-transform duration-300 ease-in-out transform hover:scale-105"
+        >
+          {{ category.name }}
+          <span
+            class="absolute bottom-0 max-w-[50%] left-0 w-0 h-[2px] bg-orange-500 transition-all duration-300 group-hover:w-full"
+          ></span>
+        </button>
+      </div>
+      <div class="w-3/4">
+        <div class="grid grid-cols-5 mb-8">
+          <div class="text-center">
+            <div class="font-bold text-xl mb-2"></div>
+          </div>
+          <div
+            *ngFor="let subscription of subscriptions"
+            class="text-center transition-transform duration-300 ease-in-out transform hover:scale-105"
+          >
+            <div class="bg-orange-500 text-white rounded-full px-4 py-1 mb-2 inline-block font-bold uppercase text-sm">
+              {{ subscriptionEnumToString(subscription.type) }}
+            </div>
+            <div class="font-bold text-xl mb-2">
+              {{ subscription.price | currency }}
+            </div>
+            <button
+              (click)="selectSubscription(subscription.id)"
+              class="w-full text-orange-500 hover:bg-orange-100 transition-colors duration-300"
+            >
+              Contratar plano
+            </button>
+          </div>
+        </div>
+        <div class="bg-orange-50 p-4 rounded-lg">
+          <h3 class="font-bold text-orange-500 uppercase mb-4">
+            {{ selectedCategory }}
+          </h3>
+          <div
+            class="transition-opacity duration-500 ease-in-out"
+            [ngClass]="{ 'opacity-0': isTransitioning, 'opacity-100': !isTransitioning }"
+          >
+            <div
+              *ngFor="let property of getPropertiesForCategory()"
+              class="grid grid-cols-5 gap-6 py-2 border-t border-white items-center"
+            >
+              <div class="col-span-1">{{ property.name }}</div>
+              <div
+                *ngFor="let subscription of subscriptions"
+                class="flex justify-center items-center"
+              >
+                <div
+                  *ngIf="subscription.subscriptionProperties[property.key]"
+                  class="w-6 h-6 rounded-full text-orange-500 bg-white flex items-center justify-center"
+                >
+                  &#10003;
+                </div>
+                <div
+                  *ngIf="!subscription.subscriptionProperties[property.key]"
+                  class="w-6 h-6 rounded-full border-2 border-orange-300"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

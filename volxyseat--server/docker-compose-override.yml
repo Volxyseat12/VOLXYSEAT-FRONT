@@ -1,0 +1,7 @@
+services:
+  sql.server:
+    environment:
+      - SA_PASSWORD=P@ssword123!
+      - ACCEPT_EULA=Y
+    ports:
+      - '5434:1433'

@@ -1,0 +1,103 @@
+<app-header></app-header>
+<div class="min-h-screen flex items-center justify-center bg-white ">
+  <main class="container mx-auto">
+    <div class="flex flex-col lg:flex-row gap-4 justify-center items-center">
+      <div
+        class="bg-white rounded-lg shadow-md p-6 transition-transform transform hover:-translate-y-1 hover:shadow-lg text-center max-w-lg mx-auto">
+        <h3 class="text-lg font-semibold mb-4">Informação do Pagamento</h3>
+        <form id="form-checkout" class="space-y-4 text-left overflow-hidden">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Número do Cartão</label>
+              <div id="form-checkout__cardNumber" class="div-input w-full border border-gray-300 rounded p-2 bg-white">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Data de Validade</label>
+              <div id="form-checkout__expirationDate"
+                class="div-input w-full border border-gray-300 rounded p-2 bg-white"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">CVV</label>
+              <div id="form-checkout__securityCode"
+                class="div-input w-full border border-gray-300 rounded p-2 bg-white"></div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Títular do Cartão</label>
+              <input type="text" id="form-checkout__cardholderName"
+                class="w-full border border-gray-300 rounded p-2 bg-white" required />
+            </div>
+          </div>
+
+          <div class=" issuer-input grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class=" block text-sm font-medium text-gray-700">Emissor</label>
+              <select id="form-checkout__issuer" class="w-full border border-gray-300 rounded p-2 bg-white"
+                required></select>
+            </div>
+            <div class="installments">
+              <label class="block text-sm font-medium text-gray-700">Parcelas</label>
+              <select id="form-checkout__installments" class="w-full border border-gray-300 rounded p-2 bg-white"
+                required></select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Tipo de identificação</label>
+              <select id="form-checkout__identificationType" class="w-full border border-gray-300 rounded p-2 bg-white"
+                required></select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Número de identificação</label>
+              <input type="text" id="form-checkout__identificationNumber"
+                class="w-full border border-gray-300 rounded p-2" required />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">E-mail do titular do cartão</label>
+            <input type="email" id="form-checkout__cardholderEmail" class="w-full border border-gray-300 rounded p-2"
+              placeholder="email@example.com" required />
+          </div>
+
+          <button type="submit" id="form-checkout__submit"
+            class="w-full mt-4 bg-[#FB812C] hover:bg-[#e67321] text-white rounded py-2 transition-transform transform hover:scale-105 flex items-center justify-center">
+            <mat-icon class="mr-2">credit_card</mat-icon> Pagar agora
+          </button>
+        </form>
+      </div>
+
+      <div *ngIf="plan" class="w-full lg:w-1/2 max-w-lg transition-transform transform hover:-translate-y-1">
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+          <h3 class="text-lg font-semibold mb-4">Detalhes do Pedido</h3>
+          <div class="flex justify-between items-center border-b border-gray-300 py-2">
+            <span class="text-gray-600">Produto</span>
+            <span class="text-gray-600">Preço</span>
+          </div>
+          <div class="flex justify-between items-center border-b border-gray-300 py-2">
+            <span class="text-gray-600">{{subscriptionEnumToString(plan.type)}}</span>
+            <span class="text-gray-600">R$ {{ plan.price | number:'1.2-2' }}</span>
+          </div>
+          <div class="flex justify-between items-center border-b border-gray-300 py-2">
+            <span class="text-gray-600">Total</span>
+            <span class="text-gray-600">R$ {{ plan.price | number:'1.2-2' }}</span>
+          </div>
+          <a href="/">
+            <button
+              class="w-full mt-4 bg-[#FB812C] hover:bg-[#e67321] text-white rounded py-2 transition-transform transform flex items-center justify-center">
+              <mat-icon class="mr-2">arrow_back</mat-icon> Voltar
+            </button>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="!plan" class="text-center text-gray-500 mt-4">
+        Carregando informações do plano...
+      </div>
+    </div>
+  </main>
+</div>
+<app-footer></app-footer>
