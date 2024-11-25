@@ -13,6 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ILogin } from '../../models/SubscriptionModel/ILogin';
 import { ToastService } from 'angular-toastify';
 import { AuthService } from '../../services/auth/auth.service';
+import { BlobService } from '../../services/blob.service';
 
 @Component({
   selector: 'app-login',
@@ -31,14 +32,19 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class LoginComponent {
   cookiesAceitos: boolean;
+  blobUrl: string = '';
   constructor(
     private router: Router,
     private cookieService: CookieService,
     private authService: AuthService,
     private transactionService: TransactionService,
-    private _toastService: ToastService
+    private _toastService: ToastService,
+    private blobService: BlobService
   ) {
     this.cookiesAceitos = this.cookieService.get('aceitou_cookies') === 'true';
+  }
+  ngOnInit(): void {
+    this.blobUrl = this.blobService.getBlobUrl();
   }
 
   public loginRequest: ILogin = {
@@ -49,8 +55,7 @@ export class LoginComponent {
   login() {
     this.authService.login(this.loginRequest).subscribe({
       next: (response: any) => {
-        this.transactionService.getById(response.clientId).subscribe({
-        });
+        this.transactionService.getById(response.clientId).subscribe({});
         localStorage.setItem('token', response.jwt);
         localStorage.setItem('email', response.email);
         localStorage.setItem('username', response.name);

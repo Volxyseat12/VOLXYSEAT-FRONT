@@ -12,8 +12,8 @@ using VOLXYSEAT.INFRASTRUCTURE.Data;
 namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20241113015636_DisableTransactionProperty")]
-    partial class DisableTransactionProperty
+    [Migration("20241125015016_PresentationMigration")]
+    partial class PresentationMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -166,7 +166,8 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
                     b.Property<DateTime>("CreatedOn")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -187,6 +188,11 @@ namespace VOLXYSEAT.INFRASTRUCTURE.Migrations
 
                     b.Property<int>("TypeId")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
 
                     b.HasKey("Id");
 

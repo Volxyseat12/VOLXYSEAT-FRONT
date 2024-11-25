@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { SubscriptionEnum } from '../../models/Enums/SubscriptionEnum';
 import { ITransaction } from '../../models/SubscriptionModel/ITransaction';
 import { ToastService } from 'angular-toastify';
+import { BlobService } from '../../services/blob.service';
 
 @Component({
   selector: 'app-header',
@@ -27,12 +28,18 @@ export class HeaderComponent {
   userPlanType: string | null = null;
   userPlan: ISubscription | null = null;
   userTransaction: ITransaction | null = null;
+  blobUrl: string = '';
+
+  ngOnInit(): void {
+    this.blobUrl = this.blobService.getBlobUrl();
+  }
 
   constructor(
     private authService: AuthService,
     private tranService: TransactionService,
     private subService: SubscriptionService,
     private router: Router,
+    private blobService: BlobService,
     private toastService: ToastService
   ) {
     this.checkUserLogin();

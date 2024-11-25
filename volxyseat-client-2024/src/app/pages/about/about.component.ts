@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { BlobService } from '../../services/blob.service';
 
 @Component({
   selector: 'app-about',
@@ -8,5 +9,11 @@ import { Component } from '@angular/core';
   styleUrl: './about.component.css'
 })
 export class AboutComponent {
+  blobUrl: string = '';
 
+  constructor(private blobService: BlobService) {}
+
+  ngOnInit(): void {
+    this.blobUrl = this.blobService.getBlobUrl();
+  }
 }

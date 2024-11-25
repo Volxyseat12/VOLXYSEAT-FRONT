@@ -3,7 +3,7 @@
   <div class="login-context flex flex-col items-center justify-center p-8 max-w-sm mx-auto w-9/12">
     <div class="login-forms flex flex-col gap-8 w-full">
       <div class="login-logo flex justify-center">
-        <img src="../public/l2.png" alt="Logo da Sua Marca" class="w-32" />
+        <img [src]="blobUrl + 'l2.png'" alt="Logo" />
       </div>
 
       <div class="login-title">
@@ -40,7 +40,7 @@
   </div>
 
   <div class="login-banner hidden md:block relative">
-    <img src="../public/bl2.png" alt="Banner de Login" class="w-full h-full object-cover" />
+    <img [src]="blobUrl + 'bl2.png'" alt="Banner de Login" class="w-full h-full object-cover"/>
   </div>
 
   <app-cookiepopup></app-cookiepopup>
