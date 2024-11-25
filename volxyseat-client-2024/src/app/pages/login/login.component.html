@@ -1,55 +1,47 @@
-<div class="login-container">
-  <div class="login-context">
-    <div class="login-forms">
-      <div class="login-logo">
-        <a href="/">
-          <img src="/l2.png" alt="Logo" />
-        </a>
+<div class="login-container grid grid-cols-1 md:grid-cols-2 h-screen w-full overflow-auto bg-cover bg-center"
+  style="background-image: url('../public/login-background.jpg')">
+  <div class="login-context flex flex-col items-center justify-center p-8 max-w-sm mx-auto w-9/12">
+    <div class="login-forms flex flex-col gap-8 w-full">
+      <div class="login-logo flex justify-center">
+        <img src="../public/l2.png" alt="Logo da Sua Marca" class="w-32" />
       </div>
+
       <div class="login-title">
-        <h1>Acesse para ter acesso ao seus benefícios.</h1>
+        <h1 class="text-2xl text-center font-semibold">Acesse para ter acesso aos seus benefícios.</h1>
       </div>
 
-      <div class="login-label">
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          name="email"
-          id="email"
-          required
-          [(ngModel)]="loginRequest.email"
-        />
+      <div class="login-label flex flex-col">
+        <label for="email" class="text-sm font-medium text-gray-700">Email:</label>
+        <input type="email" name="email" id="email" required [(ngModel)]="loginRequest.email"
+          class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" />
       </div>
 
-      <div class="login-label">
-        <label for="password">Senha:</label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          required
-          [(ngModel)]="loginRequest.password"
-        />
+      <div class="login-label flex flex-col">
+        <label for="password" class="text-sm font-medium text-gray-700">Senha:</label>
+        <input type="password" name="password" id="password" required [(ngModel)]="loginRequest.password"
+          class="mt-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" />
       </div>
 
-      <div class="login-cta">
+      <div class="login-cta flex flex-col gap-4">
         <div class="login-login-cta">
-          <button type="button" class="cta" (click)="login()">
-            LOGIN
+          <button type="button"
+            class="w-full py-3 text-lg font-bold text-white bg-orange-500 rounded-lg hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            (click)="login()">
+            INICIAR SESSÃO
           </button>
-
-          <div class="login-label login">
-            <span
-              >Não possui uma conta?
-              <a href="/register">Junte-se à VOLXYSEAT</a></span
-            >
-          </div>
+        </div>
+        <p-toast></p-toast>
+        <div class="login-label login text-center text-sm">
+          <span>Não possui uma conta? <a href="/register" class="text-orange-500 font-semibold hover:underline">Junte-se
+              à VOLXYSEAT</a></span>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="login-banner">
-    <img src="/bl2.png" alt="Banner de Login" />
+  <div class="login-banner hidden md:block relative">
+    <img src="../public/bl2.png" alt="Banner de Login" class="w-full h-full object-cover" />
   </div>
+
+  <app-cookiepopup></app-cookiepopup>
 </div>

@@ -9,8 +9,8 @@ export interface ISubscription {
   status: SubscriptionStatus;
   description: string;
   price: number;
+  mercadoPagoPlanId: string;
   createdOn: Date;
   updatedOn: Date;
   subscriptionProperties: ISubscriptionProperties;
-  mercadoPagoPlanId: string;
 }

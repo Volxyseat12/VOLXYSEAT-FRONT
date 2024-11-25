@@ -1,0 +1,27 @@
+<aside class="w-64 bg-white p-4 shadow-lg h-screen">
+    <div class="p-4 flex justify-center">
+        <img class="rounded-full" src="../public/avatar5.jpg" alt="avatar" />
+    </div>
+    <nav class="space-y-2">
+        <a href="/profile"
+            class="flex items-center space-x-2 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-100 transition"
+            aria-label="Perfil do Usuário">
+            <i class="pi pi-home text-gray-700"></i>
+            <span>Perfil</span>
+        </a>
+        @if (this.authService.getUserRoles().includes("admin")) {
+        <a href="/admin"
+            class="flex items-center space-x-2 rounded-lg px-3 py-2 text-gray-700 hover:bg-gray-100 transition"
+            aria-label="Administração">
+            <i class="pi pi-cog text-gray-700"></i>
+            <span>Admin</span>
+        </a>
+        }
+    </nav>
+
+    <div class="mt-auto p-4">
+        <button (click)="logout()"
+            class="w-full mt-4 bg-[#FB812C] hover:bg-[#e67321] text-white rounded py-2 transition-transform font-bold uppercase transform hover:scale-105 flex items-center justify-center">Sair</button>
+        <p-toast />
+    </div>
+</aside>

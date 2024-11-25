@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TemplatesComponent } from "../../pages/templates/templates.component";
 
 @Component({
   selector: 'app-footer',

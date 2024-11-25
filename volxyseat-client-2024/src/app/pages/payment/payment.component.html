@@ -1,7 +1,7 @@
 <app-header></app-header>
-<div class="min-h-screen flex items-center justify-center bg-white ">
+<div class="p-24  flex items-center justify-center bg-white ">
   <main class="container mx-auto">
-    <div class="flex flex-col lg:flex-row gap-4 justify-center items-center">
+    <div class="pt-12 flex flex-col lg:flex-row gap-4 justify-center items-center">
       <div
         class="bg-white rounded-lg shadow-md p-6 transition-transform transform hover:-translate-y-1 hover:shadow-lg text-center max-w-lg mx-auto">
         <h3 class="text-lg font-semibold mb-4">Informação do Pagamento</h3>
@@ -71,33 +71,49 @@
         </form>
       </div>
 
-      <div *ngIf="plan" class="w-full lg:w-1/2 max-w-lg transition-transform transform hover:-translate-y-1">
-        <div class="bg-white rounded-lg shadow-md p-6 text-center">
-          <h3 class="text-lg font-semibold mb-4">Detalhes do Pedido</h3>
-          <div class="flex justify-between items-center border-b border-gray-300 py-2">
-            <span class="text-gray-600">Produto</span>
-            <span class="text-gray-600">Preço</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-gray-300 py-2">
-            <span class="text-gray-600">{{subscriptionEnumToString(plan.type)}}</span>
-            <span class="text-gray-600">R$ {{ plan.price | number:'1.2-2' }}</span>
-          </div>
-          <div class="flex justify-between items-center border-b border-gray-300 py-2">
-            <span class="text-gray-600">Total</span>
-            <span class="text-gray-600">R$ {{ plan.price | number:'1.2-2' }}</span>
+      <div *ngIf="plan" class="w-full lg:w-1/2 max-w-lg">
+        <div class="bg-white/95 backdrop-blur-sm rounded-lg shadow-xl border border-white/20 p-6">
+          <h3 class="text-xl font-semibold mb-4">Detalhes do Pedido</h3>
+
+          <div class="space-y-4">
+            <div class="flex justify-between items-center border-b border-gray-200 py-3">
+              <span class="text-gray-600 font-medium">Produto</span>
+              <span class="text-gray-600 font-medium">Preço</span>
+            </div>
+
+            <div class="flex justify-between items-center py-2">
+              <span class="text-gray-800">{{subscriptionEnumToString(plan.type)}}</span>
+              <span class="text-gray-800 font-semibold">R$ {{ plan.price | number:'1.2-2' }}</span>
+            </div>
+
+            <div class="flex justify-between items-center border-t border-gray-200 pt-4 mt-4">
+              <span class="text-lg font-semibold">Total</span>
+              <span class="text-lg text-orange-500 font-bold">R$ {{ plan.price | number:'1.2-2' }}</span>
+            </div>
           </div>
           <a href="/">
             <button
-              class="w-full mt-4 bg-[#FB812C] hover:bg-[#e67321] text-white rounded py-2 transition-transform transform flex items-center justify-center">
-              <mat-icon class="mr-2">arrow_back</mat-icon> Voltar
+              class="w-full mt-6 bg-gray-100 hover:bg-orange-500 text-orange-500 rounded-lg py-3 transition-all duration-300 transform hover:scale-[1.02] hover:text-white flex items-center justify-center space-x-2">
+              <mat-icon>arrow_back</mat-icon>
+              <span>Voltar</span>
             </button>
           </a>
         </div>
       </div>
-      <div *ngIf="!plan" class="text-center text-gray-500 mt-4">
-        Carregando informações do plano...
-      </div>
+    </div>
+    <div *ngIf="!plan" class="text-center text-gray-500 mt-4">
+      Carregando informações do plano...
     </div>
   </main>
+
+  <!-- Overlay de carregamento -->
+  <div *ngIf="isProcessing" class="overlay">
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <div class="loading-text">PROCESSANDO PAGAMENTO...</div>
+    </div>
+  </div>
+
 </div>
+
 <app-footer></app-footer>

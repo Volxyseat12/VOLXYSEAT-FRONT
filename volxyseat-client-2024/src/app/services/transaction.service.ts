@@ -2,29 +2,35 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { ITransaction } from '../models/SubscriptionModel/ITransaction';
 import { HttpClient } from '@angular/common/http';
-import { VolxyseatEndpoints } from '../volxyseat.endpoints';
+import { ICreateTransactionResponse } from '../models/ICreateTransactionResponse';
+import { Endpoints, VolxyseatEndpoints } from '../volxyseat.endpoints';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TransactionService {
   apiUrl = environment.apiUrl;
-
+  endpoints: Endpoints = VolxyseatEndpoints.endpoints;
   constructor(private http: HttpClient) {}
 
-  post(transaction: ITransaction) {
-    const endpointUrl = VolxyseatEndpoints.endpoints.createTransaction(
-      this.apiUrl
+  // Tipando o retorno como Observable<ICreateTransactionResponse>
+  post(transaction: ITransaction): Observable<ICreateTransactionResponse> {
+    const endpointUrl = this.endpoints.createTransaction(this.apiUrl);
+    return this.http.post<ICreateTransactionResponse>(
+      `${endpointUrl}`,
+      transaction
     );
-    console.log(endpointUrl);
-    return this.http.post(`${endpointUrl}`, transaction);
   }
 
+  // Tipando a resposta do método getById (ajuste de acordo com o que a resposta retorna)
   getById(id: any) {
-    const endpointUrl = VolxyseatEndpoints.endpoints.getTransactionById(
-      this.apiUrl,
-      id
-    );
+    const endpointUrl = this.endpoints.getTransactionById(this.apiUrl, id);
     return this.http.get(endpointUrl);
+  }
+
+  disableTransaction(id: string) {
+    const endpointUrl = this.endpoints.disableTransation(this.apiUrl, id);
+    return this.http.put(endpointUrl, {});
   }
 }

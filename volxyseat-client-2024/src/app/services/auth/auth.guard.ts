@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -25,21 +26,43 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
   private checkAuth(route: ActivatedRouteSnapshot): boolean {
     const targetUrl = `/${route.url.join('/')}`;
+    const token = localStorage.getItem('token');
+    const transactionId = localStorage.getItem('transactionId');
+    const subId = localStorage.getItem('subId');
 
-    if (!this.authService.isAuthenticated()) {
-      this.router.navigate(['/login'], { queryParams: { returnUrl: targetUrl } });
+    if (targetUrl == "/templates" && transactionId == 'undefined') {
+      this.router.navigate(['/']);
       return false;
     }
 
-    if (targetUrl == "/admin"){
-      if (this.authService.getUserRoles().includes("admin")){
+    if (targetUrl == "/payment" && subId == 'undefined') {
+      this.router.navigate(['/']);
+      return false;
+    }
+
+    if (targetUrl == "/admin") {
+      if (this.authService.getUserRoles().includes("admin")) {
         return true;
       }
       this.router.navigate(['/']);
       return false;
     }
 
+    if (targetUrl == "/profile") {
+      if (token) {
+        return true;
+      }
+      this.router.navigate(['/']);
+      return false;
+    }
+
+    if (targetUrl == "/login" || targetUrl == "/register") {
+      if (token) {
+        this.router.navigate(['/']);
+        return false;
+      }
+      return true;
+    }
     return true;
   }
-
 }

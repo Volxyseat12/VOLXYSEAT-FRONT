@@ -1,0 +1,64 @@
+<app-header></app-header>
+<div class="min-h-screen bg-gradient-to-br from-orange-50 to-indigo-50 py-12">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto text-center mb-12" @fadeInUp>
+      <h1 class="text-2xl font-bold text-gray-900 mb-4">Agora, escolha seu template!</h1>
+      <p class="text-lg text-gray-600">Selecione o melhor template que se adequa com seu negócio!</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" @scaleIn>
+      @for (template of templates; track template.id) {
+      <div
+        class="group relative bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+        [class.ring-2]="selectedTemplate.value === template.id"
+        [class.ring-orange-600]="selectedTemplate.value === template.id" (click)="selectTemplate(template.id)">
+        <div class="relative">
+          <img [src]="template.previewImage" [alt]="template.name"
+            class="w-full h-52 object-cover transition-transform duration-300 group-hover:scale-105">
+          <div class="absolute top-4 left-4">
+            <span class="px-3 py-1 bg-white/90 rounded-full text-sm font-medium text-gray-700">
+              {{ template.category }}
+            </span>
+          </div>
+        </div>
+
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ template.name }}</h3>
+          <p class="text-gray-600 mb-4">{{ template.description }}</p>
+
+          <div class="space-y-3">
+            <h4 class="text-sm font-medium text-gray-900">Features:</h4>
+            <ul class="space-y-2">
+              @for (feature of template.features; track feature) {
+              <li class="flex items-start space-x-2 text-sm text-gray-600">
+                <svg class="w-5 h-5 text-green-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>{{ feature }}</span>
+              </li>
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    <div class="mt-12 text-center" @fadeInUp>
+      <button (click)="proceed()" [disabled]="!selectedTemplate.value"
+        class="px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 transform hover:scale-105"
+        [class]="selectedTemplate.value 
+            ? 'bg-orange-600 text-white shadow-lg hover:shadow-xl' 
+            : 'bg-gray-200 text-gray-600 cursor-not-allowed'">
+        <div class="flex items-center justify-center space-x-2">
+          <span>Continuar com o template selecionado</span>
+          @if (selectedTemplate.value) {
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+          </svg>
+          }
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

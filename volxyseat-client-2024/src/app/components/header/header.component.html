@@ -1,18 +1,18 @@
-<div class="header-component">
-  <div class="header-context">
+<div class="flex items-center justify-center bg-white sticky top-0 z-50 shadow-md">
+  <div class="header-context w-full">
     <div class="header-right">
       <div class="header-logo">
         <a href="/">
-          <img src="/l2.png" alt="" />
+          <img src="../public/l2.png" alt="" />
         </a>
       </div>
     </div>
     <div class="header-center">
       <div class="header-item">
-        <ul>
+        <ul class="flex space-x-4">
           <li>
-            <a href="#prices">Preços</a>
-            <a href="#about">Sobre</a>
+            <a href="#prices" class="text-gray-700 hover:text-orange-500">Preços</a>
+            <a href="#about" class="text-gray-700 hover:text-orange-500">Sobre</a>
           </li>
         </ul>
       </div>
@@ -21,25 +21,22 @@
       <div class="header-login">
         <div class="header-login-cta">
           @if(isAuthenticated){
-            @if(userPlanType){
-            <div class="p-2 rounded-full bg-orange-500 uppercase font-bold text-white">
-              <h1>{{userPlanType}}</h1>
-            </div>
-            }
+          <div class="p-2 rounded-full bg-orange-500 uppercase font-bold text-white">
+            <h1>{{ userPlanType || 'Sem assinatura'}}</h1>
+          </div>
+
           <div class="header-space"></div>
           <div class="flex items-center space-x-4">
-            <div class="relative">
-              <button (click)="toggleDropdown()"
-                class="flex items-center rounded-lg px-4 py-2 border border-gray-300 hover:bg-gray-100 transition">
+            <div class="">
+              <button (click)="toggleDropdown()" class="flex items-center rounded-lg px-4 py-2 border border-gray-300 hover:bg-gray-100 transition">
                 <span class="mr-2 text-gray-700">Olá, {{ username }}</span>
                 <i class="pi pi-chevron-down text-gray-600"></i>
               </button>
-              @if(showDropdown){
-                <div class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
-                  <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Perfil</a>
-                  <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition" (click)="logout()">Desconectar</a>
-                </div>
-              }
+
+              <div *ngIf="showDropdown" class="fixed mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg">
+                <a href="/profile" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition">Perfil</a>
+                <a class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition cursor-pointer" (click)="logout()">Sair</a>
+              </div>
             </div>
           </div>
 
@@ -47,8 +44,7 @@
           <div class="header-plain">
             <span class="plains-user">{{ teste }}</span>
           </div>
-          }
-          } @else{
+          } } @else{
           <a href="/login" class="cta-login">Entrar</a>
           <a href="/register"><button class="cta-register">Junte-se a VOLXY</button></a>
           }

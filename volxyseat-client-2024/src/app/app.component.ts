@@ -13,9 +13,7 @@ import { CookiepopupComponent } from "./components/cookiepopup/cookiepopup.compo
 })
 export class AppComponent {
   title = 'volxyseat-client';
-
   cookies: string | null = '';
-
   constructor() {
     this.cookies = localStorage.getItem('cookies');
   }

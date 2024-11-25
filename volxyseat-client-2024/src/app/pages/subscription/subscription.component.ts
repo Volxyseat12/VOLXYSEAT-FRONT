@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ISubscription } from '../../models/SubscriptionModel/ISubscription';
 import { PropertyCategoryMapping } from '../../models/ISubscriptionProperties';
-import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
 
 @Component({
@@ -31,7 +30,7 @@ export class SubscriptionComponent implements OnInit, OnDestroy {
   selectedCategory: string = 'Suporte';
   subscriptionProperties: { [key: string]: boolean } = {};
   isTransitioning: boolean = false;
-  hoveredCard: number | null = null; // For hover control
+  hoveredCard: number | null = null;
 
   categories = [
     { name: 'Suporte' },
@@ -54,7 +53,6 @@ export class SubscriptionComponent implements OnInit, OnDestroy {
       { name: 'Email', key: 'email' },
       { name: 'Messenger', key: 'messenger' },
       { name: 'Chat', key: 'chat' },
-      { name: 'Suporte ao vivo', key: 'liveSupport' },
     ],
     Documentação: [
       { name: 'Documentação', key: 'documentation' },
@@ -69,7 +67,6 @@ export class SubscriptionComponent implements OnInit, OnDestroy {
       { name: 'Integração', key: 'integration' },
       { name: 'Acesso à API', key: 'apiAccess' },
       { name: 'Armazenamento em nuvem', key: 'cloudStorage' },
-      { name: 'Multiusuário', key: 'multiUser' },
     ],
     'Suporte Prioritário': [
       { name: 'Suporte prioritário', key: 'prioritySupport' },
@@ -97,11 +94,10 @@ export class SubscriptionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._service
-      .getAll()
+      .getSubscriptions()
       .pipe(takeUntil(this._subscription))
       .subscribe((response: ISubscription[]) => {
         this.subscriptions = response;
-        console.log(this.subscriptions);
         this.setSubscriptionProperties(this.subscriptions[0]);
       });
   }
@@ -117,8 +113,11 @@ export class SubscriptionComponent implements OnInit, OnDestroy {
   selectSubscription(subscriptionId: string) {
     localStorage.setItem('subId', subscriptionId);
     const token = localStorage.getItem('token');
-    if (token) this.router.navigate(['/payment']);
-    else this.router.navigate(['/login']);
+    if (token) {
+      this.router.navigate(['/payment']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
   setSubscriptionProperties(subscription: ISubscription): void {

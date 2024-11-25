@@ -1,6 +1,6 @@
+import { AuthService } from './../../services/auth/auth.service';
 import { ISubscription } from './../../models/SubscriptionModel/ISubscription';
-import { Component, TemplateRef } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { Component } from '@angular/core';
 import { SubscriptionService } from '../../services/subscription.service';
 import { Router } from '@angular/router';
 import { TransactionService } from '../../services/transaction.service';
@@ -8,7 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { CommonModule } from '@angular/common';
 import { SubscriptionEnum } from '../../models/Enums/SubscriptionEnum';
 import { ITransaction } from '../../models/SubscriptionModel/ITransaction';
-import { AuthService } from '../../services/auth/auth.service';
+import { ToastService } from 'angular-toastify';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +32,8 @@ export class HeaderComponent {
     private authService: AuthService,
     private tranService: TransactionService,
     private subService: SubscriptionService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {
     this.checkUserLogin();
   }
@@ -68,17 +69,10 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logout().subscribe({
-      next: () => {
-        localStorage.clear();
-        this.username = null;
-        this.isAuthenticated = false;
-        this.router.navigate(['/']);
-      },
-      error: (error: any) => {
-        console.error('Erro ao fazer logout:', error);
-      },
-    });
+    localStorage.clear();
+    this.username = null;
+    this.isAuthenticated = false;
+    this.router.navigate(['/']);
   }
 
   getTransaction(): void {
@@ -88,38 +82,19 @@ export class HeaderComponent {
         this.getSubscriptionById(<string>this.userTransaction?.subscriptionId);
       },
       error: (error: any) => {
-        console.log(error.message);
       },
     });
   }
-
-  // getSubscriptionId() {
-  //   this.getTransaction()
-  //     .pipe(
-  //       switchMap((transaction: any) => {
-  //         console.log(transaction.subscription);
-  //         return this.getSubscriptionById(transaction.subscription);
-  //       })
-  //     )
-  //     .subscribe(
-  //       (result: any) => {
-  //         this.teste = result.type;
-  //         console.log(result);
-  //       },
-  //       (error) => {
-  //         console.error(error);
-  //       }
-  //     );
-  // }
 
   getSubscriptionById(id: string): void {
     this.subService.getById(id).subscribe({
       next: (res: any) => {
         this.userPlan = res;
-        this.userPlanType = this.subscriptionEnumToString(
-          <SubscriptionEnum>this.userPlan?.type
-        );
-        console.log(this.userPlan);
+        if (this.userPlan)
+          this.userPlanType = this.subscriptionEnumToString(
+            <SubscriptionEnum>this.userPlan?.type
+          );
+        else this.userPlanType = 'Sem Plano';
       },
     });
   }

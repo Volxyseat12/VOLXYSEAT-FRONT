@@ -1,63 +1,89 @@
-<div class="register-container">
-  <div class="register-context">
-    <div class="register-forms">
-      <div class="register-logo">
-        <a href="/">
-          <img src="/l2.png" alt="Logo" />
-        </a>
+<div class="grid grid-cols-1 lg:grid-cols-2 h-screen w-full overflow-hidden">
+  <div class="flex flex-col justify-center items-center bg-white bg-opacity-90 px-6 py-12 lg:px-20">
+    <div class="w-full max-w-md space-y-6">
+      <div class="flex justify-center">
+        <img src="../public/l2.png" alt="Logo da Sua Marca" class="w-20 h-20" />
       </div>
-      <div class="register-title">
-        <h1>
-          Construindo o Futuro Online Experimente a Excelência Gratuitamente!
+
+      <div class="text-center">
+        <h1 class="text-2xl font-bold text-gray-800 leading-snug">
+          Construindo o Futuro Online. <br />
+          Experimente a Excelência Gratuitamente!
         </h1>
       </div>
 
-      <div class="register-label">
-        <label for="name">Nome da Empresa:</label>
-        <input
-          type="text"
-          [(ngModel)]="newRegister.name"
-          name="companyName"
-          id="companyName"
-          required
-        />
-      </div>
-
-      <div class="register-label">
-        <label for="email">Email:</label>
-        <input
-          type="email"
-          [(ngModel)]="newRegister.email"
-          name="email"
-          id="email"
-          required
-        />
-      </div>
-
-      <div class="register-label">
-        <label for="password">Senha:</label>
-        <input
-          type="password"
-          [(ngModel)]="newRegister.password"
-          name="password"
-          id="password"
-          required
-        />
-      </div>
-
-      <div class="register-cta">
-        <button type="submit" class="cta" (click)="register()">
-          CADASTRAR
-        </button>
-
-        <div class="register-label register">
-          <span>Já é membro VOLXY? <a href="/login">Faça login!</a></span>
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-4">
+        <div>
+          <label for="companyName" class="block text-sm font-medium text-gray-700">
+            Nome da Empresa:
+          </label>
+          <input
+            type="text"
+            formControlName="companyName"
+            id="companyName"
+            required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+          @if (registerForm.get('companyName')?.invalid && (registerForm.get('companyName')?.dirty || registerForm.get('companyName')?.touched)) {
+            @if (registerForm.get('companyName')?.errors?.['required']) {
+              <div class="text-red-500 text-xs">Nome da Empresa é obrigatório.</div>
+            }
+          }
         </div>
-      </div>
+
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+          <input
+            type="email"
+            formControlName="email"
+            id="email"
+            required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+          @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)) {
+            @if (registerForm.get('email')?.errors?.['required']) {
+              <div class="text-red-500 text-xs">Email é obrigatório.</div>
+            }
+            @if (registerForm.get('email')?.errors?.['email']) {
+              <div class="text-red-500 text-xs">Email inválido.</div>
+            }
+          }
+        </div>
+
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700">Senha:</label>
+          <input
+            type="password"
+            formControlName="password"
+            id="password"
+            required
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+          @if (registerForm.get('password')?.invalid && (registerForm.get('password')?.dirty || registerForm.get('password')?.touched)) {
+            @if (registerForm.get('password')?.errors?.['required']) {
+              <div class="text-red-500 text-xs">Senha é obrigatória.</div>
+            }
+          }
+        </div>
+
+        <div class="flex flex-col items-center space-y-2">
+          <button
+            type="submit"
+            class="w-full bg-orange-500 text-white py-2 px-4 rounded-md font-bold hover:bg-orange-600 transition"
+            [disabled]="registerForm.invalid"
+          >
+            CADASTRAR
+          </button>
+          <div class="text-sm">
+            Já é membro VOLXY?
+            <a href="/login" class="text-orange-500 font-bold hover:underline">Faça login!</a>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 
-  <div class="register-banner">
-    <img src="/br2.png" alt="Banner de register" />
+  <div class="hidden lg:flex items-center justify-center bg-gray-100 relative">
+    <img src="../public/br2.png" alt="Banner de register" class="object-cover w-full h-full" />
   </div>
 </div>

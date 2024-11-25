@@ -1,8 +1,6 @@
 <router-outlet></router-outlet>
-<lib-toastify-toast-container
-  [position]="'top-right'"
-  [autoClose]="3000"
-></lib-toastify-toast-container>
+<lib-toastify-toast-container [position]="'top-right'" [autoClose]="3000">
+    ></lib-toastify-toast-container>
 @if(cookies == null){
-  <app-cookiepopup></app-cookiepopup>
+<app-cookiepopup></app-cookiepopup>
 }

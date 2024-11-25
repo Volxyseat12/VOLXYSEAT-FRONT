@@ -5,7 +5,7 @@ import { environment } from '../environments/environment';
 import { VolxyseatEndpoints } from '../volxyseat.endpoints';
 import { SubscriptionEnum } from '../models/Enums/SubscriptionEnum';
 import { ISubscription } from '../models/SubscriptionModel/ISubscription';
-import { SubscriptionRequest } from '../models/SubscriptionModel/SubscriptionRequest';
+import { ISubscriptionRequest } from '../models/SubscriptionModel/ISubscriptionRequest';
 
 @Injectable({
   providedIn: 'root',
@@ -15,13 +15,15 @@ export class SubscriptionService {
     ISubscription[]
   >([]);
 
-  apiVersion = 'api/v1'
-
-  apiUrl = `${environment.apiUrl}/${this.apiVersion}/Subscription`;
+  apiUrl = `${environment.apiUrl}/api/v1/Subscription`;
 
   constructor(private http: HttpClient) {}
 
   planoSelecionado: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
+  get subscriptions$(): Observable<ISubscription[]> {
+    return this._subscription.asObservable();
+  }
 
   getSubscriptionTypeText(type: SubscriptionEnum): string {
     const typeMap: { [key: number]: string } = {
@@ -33,8 +35,10 @@ export class SubscriptionService {
     return typeMap[type] || 'Unknown';
   }
 
-  updateSubscription(id: string, subscription: SubscriptionRequest): Observable<ISubscription>{
-    return this.http.put<ISubscription>(`${this.apiUrl}/?id${id}`, subscription)
+  getSubscriptions(): Observable<ISubscription[]> {
+    const apiUrl = environment.apiUrl;
+    const endpointUrl = VolxyseatEndpoints.endpoints.getSubscriptions(apiUrl);
+    return this.http.get<ISubscription[]>(endpointUrl);
   }
 
   setPlano(plano: any) {
@@ -65,5 +69,9 @@ export class SubscriptionService {
 
   getSubscriptionStatus(id: string): Observable<any> {
     return this.http.get(`${this.apiUrl}/status/${id}`);
+  }
+
+  updateSubscription(id: string, subscription: ISubscriptionRequest): Observable<ISubscription>{
+    return this.http.put<ISubscription>(`${this.apiUrl}/${id}`, subscription)
   }
 }

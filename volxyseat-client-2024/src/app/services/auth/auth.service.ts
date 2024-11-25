@@ -57,6 +57,4 @@ export class AuthService {
     const decodedToken = this.jwtHelper.decodeToken(token!);
     return decodedToken.role || [];
   }
-
-
 }
